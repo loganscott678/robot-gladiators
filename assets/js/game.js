@@ -16,6 +16,9 @@ var enemyAttack = 12;
 // "LOSE" - Player robot's health is zero or less
 
 var fight = function(enemyName) {
+
+    window.alert("Welcome to Robot Gladiators!");
+    
     // repeat and execute as long as the enemy-robot is alive
     while(playerHealth > 0 && enemyHealth > 0) {
         // ask the player if they'd like to fight or run
