@@ -38,7 +38,7 @@ var fight = function(enemyName) {
     // repeat and execute as long as the enemy-robot is alive
     while(playerHealth > 0 && enemyHealth > 0) {
         // ask the player if they'd like to fight or run
-        var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.");
+        var promptFight = window.prompt('Would you like to FIGHT or SKIP this battle? Enter "FIGHT" or "SKIP" to choose.');
 
         // if player chooses to skip, confirm and stop the loop
         if (promptFight === "skip" || promptFight ==="SKIP") {
@@ -47,7 +47,7 @@ var fight = function(enemyName) {
 
             // if yes (true), leave fight 
             if (confirmSkip) {
-                window.alert(playerName + " has decided to skip this fight. Goodbye!");
+                window.alert(playerName + ' has decided to skip this fight. Goodbye!');
                 // subtract money from playerMoney for skipping
                 playerMoney = playerMoney - 10;
                 console.log("playerMoney", playerMoney);
@@ -110,6 +110,17 @@ var startGame = function() {
 
             // pass the pickedEnemyName variable's value into the fight function, where it will assume the value of the enemyName parameter
             fight(pickedEnemyName);
+
+            // if player is still alive and we're not at the last enemy in the array, open the shop
+            if (playerHealth > 0 && i < enemyNames.length - 1) {
+                // ask if player wants to use the shop before next round
+                var storeConfirm = window.confirm('The fight is over. Visit the store before the next round?');
+
+                // if yes, then take them to the store() function
+                if (storeConfirm) {
+                    shop();
+                }
+            }
         }
 
         else { 
@@ -141,6 +152,57 @@ var endGame = function() {
     }
     else {
         window.alert('Thank you for playing Robot Gladiators! Come back soon!');
+    }
+};
+
+var shop = function() {
+    // ask player what they'd like to do
+    var shopOptionPrompt = window.prompt(
+        'Would you like to REFILL your health, UPGRADE your attack, or LEAVE the store? Please enter one: "REFILL", "UPGRADE", or "LEAVE" to make a choice.'
+    );
+
+    // use switch to carry out action 
+    switch (shopOptionPrompt) {
+        case 'REFILL': // new case
+        case 'refill':
+            if (playerMoney >= 7) {
+                window.alert("Refilling player's health by 20 for 7 dollars.");
+
+                // increase health and decrease money
+                playerHealth = playerHealth + 20;
+                playerMoney = playerMoney - 7;
+            }
+            else {
+                window.alert("You don't have enough money!");
+            }
+
+                break;
+        case 'UPGRADE': // new case
+        case 'upgrade':
+            if (playerMoney >= 7) {
+                window.alert("Upgrading player's attack by 6 for 7 dollars.");
+
+                // increase attack and decrease money
+                playerAttack = playerAttack + 6;
+                playerMoney = playerMoney - 7;
+            }
+            else {
+                window.alert("You don't have enough money!");
+            }
+
+                break;
+        case 'LEAVE': // new case
+        case 'leave':
+            window.alert('Leaving the store');
+
+            // do nothing, so function will end
+            break;
+        default:
+            window.alert('You did not pick a valid option. Try again.');
+
+            // call shop() again to force player to pick a valid option
+            shop();
+            break;
     }
 };
 
